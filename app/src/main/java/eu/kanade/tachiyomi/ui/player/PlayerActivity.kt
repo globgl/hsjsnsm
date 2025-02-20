@@ -2077,6 +2077,8 @@ class PlayerActivity : BaseActivity() {
                             animeId = viewModel.currentAnime?.id,
                             // AM (CUSTOM_INFORMATION) -->
                             animeTitle = viewModel.currentAnime?.ogTitle,
+                            start = System.currentTimeMillis(),
+                            stop = start + TimeUnit.SECONDS.toMillis(player.duration?.toLong() ?: null)
                             // <-- AM (CUSTOM_INFORMATION)
                             episodeNumber = viewModel.currentEpisode?.episode_number?.toString(),
                             thumbnailUrl = viewModel.currentAnime?.thumbnailUrl,
