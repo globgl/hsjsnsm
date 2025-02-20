@@ -183,6 +183,10 @@ class DiscordRPCService : Service() {
 
             val animeTitle = playerData.animeTitle.takeUnless { discordIncognito }
 
+            val start = playerData.start
+
+            val stop = playerData.stop
+
             val episodeNumber = playerData.episodeNumber?.toFloatOrNull()?.let {
                 when {
                     discordIncognito -> null
@@ -220,8 +224,10 @@ class DiscordRPCService : Service() {
                             discordScreen = DiscordScreen.VIDEO,
                             playerData = PlayerData(
                                 animeTitle = animeTitle,
+                                start = start,
+                                stop = stop,
                                 episodeNumber = episodeNumber,
-                                thumbnailUrl = animeThumbnail,
+                                thumbnailUrl = animeThumbnail,                       
                             ),
                         )
                     }
