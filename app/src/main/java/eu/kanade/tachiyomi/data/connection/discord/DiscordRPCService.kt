@@ -143,13 +143,17 @@ class DiscordRPCService : Service() {
 
             val imageUrl = playerData.thumbnailUrl ?: discordScreen.imageUrl
 
+            val start = playerData.start
+
+            val stop = playerData.stop
+
             rpc!!.updateRPC(
                 activity = DiscordActivity(
                     name = name,
                     details = details,
                     state = state,
                     type = 3,
-                    timestamps = DiscordActivity.Timestamps(start = since),
+                    timestamps = DiscordActivity.Timestamps(start = start, stop = stop),
                     assets = DiscordActivity.Assets(
                         largeImage = "mp:$imageUrl",
                         smallImage = "mp:${DiscordScreen.APP.imageUrl}",
