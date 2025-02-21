@@ -1018,7 +1018,7 @@ class PlayerActivity : BaseActivity() {
         abandonAudioFocus()
         super.onDestroy()
         // AM (DISCORD_RPC) -->
-        updateDiscordRPC(exitingPlayer = true)
+        updateDiscordRPC(exitingPlayer = true, Duration = 0)
         // <-- AM (DISCORD_RPC)
     }
 
@@ -2064,19 +2064,19 @@ class PlayerActivity : BaseActivity() {
     }
 
     // AM (DISCORD_RPC) -->
-    internal fun updateDiscordRPC(exitingPlayer: Boolean) {
+    internal fun updateDiscordRPC(exitingPlayer: Boolean, Duration: Int) {
         DiscordRPCService.discordScope.launchIO {
             if (connectionPreferences.enableDiscordRPC().get()) {
                 if (!exitingPlayer) {
                     val start = System.currentTimeMillis()
-                    val end = start + TimeUnit.SECONDS.toMillis(player.duration?.toLong() ?: 0L)
+                    val end = start + TimeUnit.SECONDS.toMillis(Duration?.toLong() ?: 0L)
                     DiscordRPCService.setPlayerActivity(
                         context = applicationContext,
                         PlayerData(
                             incognitoMode = viewModel.currentSource.isNsfw() || viewModel.incognitoMode,
                             animeId = viewModel.currentAnime?.id,
                             // AM (CUSTOM_INFORMATION) -->
-                            animeTitle = "$player.duration",
+                            animeTitle = "$Duration",
                             start = start,
                             end = end,
                             // <-- AM (CUSTOM_INFORMATION)

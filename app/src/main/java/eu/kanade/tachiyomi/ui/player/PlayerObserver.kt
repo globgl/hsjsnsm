@@ -36,7 +36,7 @@ class PlayerObserver(val activity: PlayerActivity) :
                 activity.viewModel.viewModelScope.launchUI {
                     activity.player.paused = false
                     activity.refreshUi()
-                    activity.updateDiscordRPC(exitingPlayer = false)
+                    activity.updateDiscordRPC(exitingPlayer = false, Duration = activity.player.duration ?: 0)
                     // Fixes a minor Ui bug but I have no idea why
                     val isEpisodeOnline = withIOContext { activity.viewModel.isEpisodeOnline() != true }
                     if (isEpisodeOnline) activity.showLoadingIndicator(false)
