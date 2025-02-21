@@ -116,6 +116,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -1668,9 +1669,6 @@ class PlayerActivity : BaseActivity() {
             MPVLib.command(arrayOf("loadfile", parseVideoUrl(it.videoUrl)))
         }
         refreshUi()
-
-        // AM (DISCORD_RPC) -->
-        updateDiscordRPC(exitingPlayer = false)
         // <-- AM (DISCORD_RPC)
     }
 
@@ -2066,21 +2064,23 @@ class PlayerActivity : BaseActivity() {
     }
 
     // AM (DISCORD_RPC) -->
-    private fun updateDiscordRPC(exitingPlayer: Boolean) {
+    internal fun updateDiscordRPC(exitingPlayer: Boolean) {
         DiscordRPCService.discordScope.launchIO {
             if (connectionPreferences.enableDiscordRPC().get()) {
                 if (!exitingPlayer) {
+                    val start = System.currentTimeMillis()
+                    val end = start + TimeUnit.SECONDS.toMillis(player.duration?.toLong() ?: 0L)
                     DiscordRPCService.setPlayerActivity(
                         context = applicationContext,
                         PlayerData(
                             incognitoMode = viewModel.currentSource.isNsfw() || viewModel.incognitoMode,
                             animeId = viewModel.currentAnime?.id,
                             // AM (CUSTOM_INFORMATION) -->
-                            animeTitle = viewModel.currentAnime?.ogTitle,
-                            start = System.currentTimeMillis(),
-                            stop = start + TimeUnit.SECONDS.toMillis(player.duration?.toLong() ?: null)
+                            animeTitle = "$player.duration",
+                            start = start,
+                            end = end,
                             // <-- AM (CUSTOM_INFORMATION)
-                            episodeNumber = viewModel.currentEpisode?.episode_number?.toString(),
+                            episodeNumber = end.toString(),
                             thumbnailUrl = viewModel.currentAnime?.thumbnailUrl,
                         ),
                     )

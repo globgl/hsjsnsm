@@ -52,7 +52,7 @@ data class DiscordActivity(
     @Serializable
     data class Timestamps(
         val start: Long? = null,
-        val stop: Long? = null,
+        val end: Long? = null,
     )
 }
 
@@ -147,7 +147,7 @@ data class PlayerData(
     val incognitoMode: Boolean = false,
     val animeId: Long? = null,
     val start: Long? = null,
-    val stop: Long? = null,
+    val end: Long? = null,
     val animeTitle: String? = null,
     val episodeNumber: String? = null,
     val thumbnailUrl: String? = null,

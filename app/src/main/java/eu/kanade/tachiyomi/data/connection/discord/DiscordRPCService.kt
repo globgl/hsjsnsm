@@ -145,7 +145,7 @@ class DiscordRPCService : Service() {
 
             val start = playerData.start
 
-            val stop = playerData.stop
+            val end = playerData.end
 
             rpc!!.updateRPC(
                 activity = DiscordActivity(
@@ -153,7 +153,7 @@ class DiscordRPCService : Service() {
                     details = details,
                     state = state,
                     type = 3,
-                    timestamps = DiscordActivity.Timestamps(start = start, stop = stop),
+                    timestamps = DiscordActivity.Timestamps(start = start, end = end),
                     assets = DiscordActivity.Assets(
                         largeImage = "mp:$imageUrl",
                         smallImage = "mp:${DiscordScreen.APP.imageUrl}",
@@ -185,7 +185,7 @@ class DiscordRPCService : Service() {
 
             val start = playerData.start
 
-            val stop = playerData.stop
+            val end = playerData.end
 
             val episodeNumber = playerData.episodeNumber?.toFloatOrNull()?.let {
                 when {
@@ -225,7 +225,7 @@ class DiscordRPCService : Service() {
                             playerData = PlayerData(
                                 animeTitle = animeTitle,
                                 start = start,
-                                stop = stop,
+                                end = end,
                                 episodeNumber = episodeNumber,
                                 thumbnailUrl = animeThumbnail,                       
                             ),
