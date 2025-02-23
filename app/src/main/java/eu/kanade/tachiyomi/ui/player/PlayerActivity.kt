@@ -1179,6 +1179,7 @@ class PlayerActivity : BaseActivity() {
         val position = player.timePos ?: return
         val cachePosition = MPVLib.getPropertyInt("demuxer-cache-time") ?: -1
         showLoadingIndicator(position >= cachePosition && seeking)
+        updateDiscordRPC(exitingPlayer = false, Duration = player.duration ?: 0)
     }
 
     @Suppress("UNUSED_PARAMETER")
