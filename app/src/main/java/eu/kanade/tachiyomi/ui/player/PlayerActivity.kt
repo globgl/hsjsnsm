@@ -2076,11 +2076,11 @@ class PlayerActivity : BaseActivity() {
                             incognitoMode = viewModel.currentSource.isNsfw() || viewModel.incognitoMode,
                             animeId = viewModel.currentAnime?.id,
                             // AM (CUSTOM_INFORMATION) -->
-                            animeTitle = "$Duration",
+                            animeTitle = viewModel.currentAnime?.ogTitle,
                             start = start,
                             end = end,
                             // <-- AM (CUSTOM_INFORMATION)
-                            episodeNumber = end.toString(),
+                            episodeNumber = viewModel.currentEpisode?.episode_number?.toString(),
                             thumbnailUrl = viewModel.currentAnime?.thumbnailUrl,
                         ),
                     )

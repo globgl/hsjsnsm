@@ -202,7 +202,7 @@ class DiscordRPCService : Service() {
                     try {
                         // Thanks to https://github.com/dead8309/Kizzy
                         client.newCall(
-                            GET("https://kizzy-api.vercel.app/image?url=${playerData.thumbnailUrl}"),
+                            GET("https://kizzy-api.cjjdxhdjd.workers.dev/image?url=${playerData.thumbnailUrl}"),
                         ).execute()
                     } catch (e: Throwable) {
                         null

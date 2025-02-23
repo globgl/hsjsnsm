@@ -31,12 +31,14 @@ class PlayerObserver(val activity: PlayerActivity) :
     override fun event(eventId: Int) {
         when (eventId) {
             MPVLib.mpvEventId.MPV_EVENT_FILE_LOADED ->
-                activity.viewModel.viewModelScope.launchIO { activity.fileLoaded() }
+                activity.viewModel.viewModelScope.launchIO { 
+                    activity.fileLoaded()
+                    activity.updateDiscordRPC(exitingPlayer = false, Duration = activity.player.duration ?: 0)
+                    }
             MPVLib.mpvEventId.MPV_EVENT_START_FILE ->
                 activity.viewModel.viewModelScope.launchUI {
                     activity.player.paused = false
                     activity.refreshUi()
-                    activity.updateDiscordRPC(exitingPlayer = false, Duration = activity.player.duration ?: 0)
                     // Fixes a minor Ui bug but I have no idea why
                     val isEpisodeOnline = withIOContext { activity.viewModel.isEpisodeOnline() != true }
                     if (isEpisodeOnline) activity.showLoadingIndicator(false)
