@@ -2068,8 +2068,10 @@ class PlayerActivity : BaseActivity() {
         DiscordRPCService.discordScope.launchIO {
             if (connectionPreferences.enableDiscordRPC().get()) {
                 if (!exitingPlayer) {
-                    val start = System.currentTimeMillis()
-                    val end = start + TimeUnit.SECONDS.toMillis(Duration?.toLong() ?: 0L)
+                    val Duration = Duration?.toLong() ?: 0L
+                    val posisi = TimeUnit.SECONDS.toMillis(player.timePos?.toLong() ?: 0L)
+                    val start = System.currentTimeMillis() - posisi
+                    val end = start + TimeUnit.SECONDS.toMillis(Duration)
                     DiscordRPCService.setPlayerActivity(
                         context = applicationContext,
                         PlayerData(
