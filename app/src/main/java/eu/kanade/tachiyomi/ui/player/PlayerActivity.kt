@@ -890,6 +890,7 @@ class PlayerActivity : BaseActivity() {
         player.paused = pause
         playerControls.toggleControls(!pause)
         updatePlaybackState(pause = pause)
+
     }
 
     private fun updatePlaybackState(cachePause: Boolean = false, pause: Boolean = false) {
@@ -919,6 +920,7 @@ class PlayerActivity : BaseActivity() {
                 build()
             },
         )
+        updateDiscordRPC(exitingPlayer = false, Duration = player.duration ?: 0)
     }
 
     @Suppress("DEPRECATION")
@@ -2069,17 +2071,18 @@ class PlayerActivity : BaseActivity() {
         DiscordRPCService.discordScope.launchIO {
             if (connectionPreferences.enableDiscordRPC().get()) {
                 if (!exitingPlayer) {
-                    val Duration = Duration?.toLong() ?: 0L
+                    val Duration = if (player.paused ?: false) 0L else Duration?.toLong() ?: 0L
                     val posisi = TimeUnit.SECONDS.toMillis(player.timePos?.toLong() ?: 0L)
                     val start = System.currentTimeMillis() - posisi
                     val end = start + TimeUnit.SECONDS.toMillis(Duration)
+                    val ispaused = if (player.paused ?: false) " (PAUSED)" else ""
                     DiscordRPCService.setPlayerActivity(
                         context = applicationContext,
                         PlayerData(
                             incognitoMode = viewModel.currentSource.isNsfw() || viewModel.incognitoMode,
                             animeId = viewModel.currentAnime?.id,
                             // AM (CUSTOM_INFORMATION) -->
-                            animeTitle = viewModel.currentAnime?.ogTitle,
+                            animeTitle = ispaused + viewModel.currentAnime?.ogTitle,
                             start = start,
                             end = end,
                             // <-- AM (CUSTOM_INFORMATION)
