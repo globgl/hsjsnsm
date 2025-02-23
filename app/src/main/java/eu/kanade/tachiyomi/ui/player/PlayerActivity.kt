@@ -920,7 +920,6 @@ class PlayerActivity : BaseActivity() {
                 build()
             },
         )
-        updateDiscordRPC(exitingPlayer = false, Duration = player.duration ?: 0)
     }
 
     @Suppress("DEPRECATION")
@@ -2075,7 +2074,7 @@ class PlayerActivity : BaseActivity() {
                     val posisi = TimeUnit.SECONDS.toMillis(player.timePos?.toLong() ?: 0L)
                     val start = System.currentTimeMillis() - posisi
                     val end = start + TimeUnit.SECONDS.toMillis(Duration)
-                    val ispaused = if (player.paused ?: false) " (PAUSED)" else ""
+                    val ispaused = if (player.paused ?: false) "(PAUSED) > " else ""
                     DiscordRPCService.setPlayerActivity(
                         context = applicationContext,
                         PlayerData(

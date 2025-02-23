@@ -19,7 +19,12 @@ class PlayerObserver(val activity: PlayerActivity) :
     }
 
     override fun eventProperty(property: String, value: Boolean) {
-        activity.runOnUiThread { activity.eventPropertyUi(property, value) }
+        activity.runOnUiThread {
+            activity.eventPropertyUi(property, value)
+            if (property == "pause") {
+                activity.updateDiscordRPC(exitingPlayer = false, Duration = activity.player.duration ?: 0)
+            }
+            }
     }
 
     override fun eventProperty(property: String, value: Long) {
